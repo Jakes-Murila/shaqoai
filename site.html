@@ -978,3 +978,41 @@ function HowItWorks(){
     </section>
   );
 }
+
+
+/* ---------------- Pricing ---------------- */
+function Pricing(){
+  const [annual, setAnnual] = useState(true);
+  const plans = [
+    { name:'Starter', desc:'For small teams beginning automation.', monthly:0, popular:false, features:['1 AI agent','Core integrations','Email support','Basic audit log']},
+    { name:'Business', desc:'For businesses deploying multiple AI agents.', monthly:0, popular:true, features:['Up to 5 AI agents','All integrations','Priority support','Full audit trail','Human approval workflows']},
+    { name:'Enterprise', desc:'For organizations requiring advanced governance.', monthly:null, popular:false, features:['Unlimited agents','Custom integrations','Dedicated support','Advanced governance','SLA & onboarding']},
+  ];
+  return (
+    <section id="pricing" className="py-24 px-5 bg-[var(--bg-soft)] border-y border-[var(--line)]">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-10">
+          <h2 className="js-reveal font-display text-3xl md:text-4xl font-bold tracking-tight">Simple, transparent pricing</h2>
+          <p className="js-reveal text-[var(--ink-soft)] mt-4" style={{animationDelay:'.05s'}}>Pricing shown is illustrative. Contact sales for a plan tailored to your business.</p>
+          <div className="js-reveal inline-flex items-center gap-3 mt-8 bg-white border border-[var(--line)] rounded-full p-1" style={{animationDelay:'.1s'}}>
+            <button onClick={()=>setAnnual(false)} className={`px-4 py-2 text-sm font-semibold rounded-full transition-all ${!annual ? 'bg-[var(--ink)] text-white' : 'text-[var(--ink-soft)]'}`}>Monthly</button>
+            <button onClick={()=>setAnnual(true)} className={`px-4 py-2 text-sm font-semibold rounded-full transition-all ${annual ? 'bg-[var(--ink)] text-white' : 'text-[var(--ink-soft)]'}`}>Annual <span className="text-[var(--green)]">-20%</span></button>
+          </div>
+        </div>
+        <div className="grid md:grid-cols-3 gap-6">
+          {plans.map((p,i)=>(
+            <div key={p.name} className={`js-reveal card p-8 flex flex-col ${p.popular ? 'border-2 border-[var(--blue)] shadow-xl relative md:-translate-y-3' : ''}`} style={{animationDelay:`${i*0.08}s`}}>
+              {p.popular && <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[var(--blue)] text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-wide">MOST POPULAR</span>}
+              <div className="font-display font-bold text-lg">{p.name}</div>
+              <div className="text-sm text-[var(--ink-soft)] mt-1.5 mb-6">{p.desc}</div>
+              <ul className="flex flex-col gap-2.5 mb-8 flex-1">
+                {p.features.map(f=>(<li key={f} className="text-sm flex items-center gap-2"><Icon.check className="w-3.5 h-3.5 text-[var(--green)] shrink-0"/>{f}</li>))}
+              </ul>
+              <a href="#" className={`text-center font-semibold py-3 rounded-xl text-sm ${p.popular ? 'btn-primary' : 'btn-ghost'}`}>{p.name==='Enterprise' ? 'Contact Sales' : 'Start Free Trial'}</a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
