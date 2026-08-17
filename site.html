@@ -740,3 +740,109 @@ function Integrations(){
     </section>
   );
 }
+
+
+/* ---------------- Feature Grid ---------------- */
+function FeatureGrid(){
+  const features = [
+    { icon:Icon.bolt, title:'Autonomous Workflows', d:'Let AI agents execute repetitive operational workflows end-to-end, from trigger to completion.'},
+    { icon:Icon.users, title:'Multi-Agent Teams', d:'Multiple specialized agents collaborate on complex, cross-functional tasks.'},
+    { icon:Icon.globe, title:'Kenya-Ready Operations', d:'Support workflows relevant to local businesses, including M-Pesa-based processes.'},
+    { icon:Icon.shield, title:'Human-in-the-Loop', d:'Sensitive actions can require explicit human authorization before execution.'},
+  ];
+  return (
+    <section className="py-24 px-5 bg-[var(--bg-soft)] border-y border-[var(--line)]">
+      <div className="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {features.map((f,i)=>(
+          <div key={f.title} className="js-reveal card p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-300" style={{animationDelay:`${i*0.08}s`}}>
+            <div className="w-11 h-11 rounded-xl bg-[var(--bg-mist)] text-[var(--blue)] flex items-center justify-center mb-5">
+              <f.icon className="w-5 h-5"/>
+            </div>
+            <div className="font-semibold text-sm mb-2">{f.title}</div>
+            <div className="text-[13px] text-[var(--ink-soft)] leading-relaxed">{f.d}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Human Approval Demo ---------------- */
+function HumanApproval(){
+  const [stage, setStage] = useState('pending'); // pending -> approving -> done
+  const steps = ['Approval confirmed','Payment authorized','Transaction processed','Audit record created'];
+  const [stepIdx, setStepIdx] = useState(-1);
+
+  const approve = ()=>{
+    setStage('approving');
+    setStepIdx(0);
+    let i=0;
+    const iv = setInterval(()=>{
+      i++;
+      setStepIdx(i);
+      if(i>=steps.length-1){ clearInterval(iv); setTimeout(()=>setStage('done'),400); }
+    }, 550);
+  };
+  const reset = ()=>{ setStage('pending'); setStepIdx(-1); };
+
+  return (
+    <section className="py-24 px-5">
+      <div className="max-w-5xl mx-auto grid lg:grid-cols-2 gap-14 items-center">
+        <div>
+          <h2 className="js-reveal font-display text-3xl md:text-4xl font-bold tracking-tight leading-tight">Autonomous When Possible. <br/>Human When Necessary.</h2>
+          <p className="js-reveal text-[var(--ink-soft)] mt-5 leading-relaxed" style={{animationDelay:'.05s'}}>
+            Financial actions are never executed silently. ShaqoAI prepares the recommendation, then pauses for a real human decision — with every step recorded.
+          </p>
+          <ul className="js-reveal flex flex-col gap-3 mt-6 text-sm" style={{animationDelay:'.1s'}}>
+            {['AI prepares recipient, amount, and reason','Execution pauses for human review','Approval or rejection is logged with full context'].map(t=>(
+              <li key={t} className="flex items-start gap-2.5"><Icon.check className="w-4 h-4 text-[var(--green)] mt-0.5 shrink-0"/><span className="text-[var(--ink-soft)]">{t}</span></li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="card p-6 shadow-xl">
+          <div className="flex items-center gap-2 text-xs font-semibold text-[var(--ink-soft)] uppercase tracking-wide mb-4">
+            <span className="w-6 h-6 rounded-lg bg-[var(--bg-mist)] text-[var(--blue)] inline-flex items-center justify-center"><Icon.wallet className="w-3.5 h-3.5"/></span>
+            Finance Agent
+          </div>
+          <div className="text-sm font-semibold mb-4">Payment Authorization Required</div>
+          <div className="grid grid-cols-2 gap-y-3 gap-x-4 text-xs mb-5">
+            <div><div className="text-[var(--ink-soft)]">Recipient</div><div className="font-medium mt-0.5">Kenya Office Supplies Ltd.</div></div>
+            <div><div className="text-[var(--ink-soft)]">Payment Method</div><div className="font-medium mt-0.5">M-Pesa</div></div>
+            <div><div className="text-[var(--ink-soft)]">Amount</div><div className="font-medium mt-0.5">KES 15,000</div></div>
+            <div><div className="text-[var(--ink-soft)]">Invoice</div><div className="font-medium mt-0.5">INV-1042</div></div>
+            <div className="col-span-2"><div className="text-[var(--ink-soft)]">Reason</div><div className="font-medium mt-0.5">Supplier payment</div></div>
+          </div>
+
+          {stage==='pending' && (
+            <div className="flex gap-3 border-t border-[var(--line)] pt-4">
+              <button onClick={reset} className="btn-ghost flex-1 py-2.5 rounded-xl text-sm font-semibold">Cancel</button>
+              <button onClick={approve} className="btn-primary flex-1 py-2.5 rounded-xl text-sm font-semibold">Approve Payment</button>
+            </div>
+          )}
+
+          {stage!=='pending' && (
+            <div className="border-t border-[var(--line)] pt-4">
+              <div className="flex flex-col gap-2.5">
+                {steps.map((s,i)=>(
+                  <div key={s} className={`flex items-center gap-2.5 text-xs transition-all duration-300 ${i<=stepIdx ? 'opacity-100' : 'opacity-30'}`}>
+                    <span className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${i<=stepIdx ? 'bg-[var(--green)]' : 'bg-slate-200'}`}>
+                      {i<=stepIdx && <Icon.check className="w-2.5 h-2.5 text-white"/>}
+                    </span>
+                    {s}
+                  </div>
+                ))}
+              </div>
+              {stage==='done' && (
+                <div className="mt-4 flex items-center justify-between">
+                  <span className="text-xs font-semibold text-[var(--green)] flex items-center gap-1.5"><span className="dot" style={{background:'#22C55E'}}/> Success</span>
+                  <button onClick={reset} className="text-xs font-semibold text-[var(--blue)]">Reset demo</button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
