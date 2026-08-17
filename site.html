@@ -1071,3 +1071,40 @@ function Footer(){
     </footer>
   );
 }
+
+
+/* ---------------- App ---------------- */
+function App(){
+  useReveal();
+  return (
+    <>
+      <Nav/>
+      <Hero/>
+      <ImpactMetrics/>
+      <AgentShowcase/>
+      <AgentDirectory/>
+      <RoiCalculator/>
+      <Integrations/>
+      <FeatureGrid/>
+      <HumanApproval/>
+      <WorkflowCompare/>
+      <OperationsDashboard/>
+      <Security/>
+      <HowItWorks/>
+      <Pricing/>
+      <FinalCTA/>
+      <Footer/>
+    </>
+  );
+}
+
+try {
+  document.getElementById('root').dataset.mounted = '1';
+  ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+} catch(err) {
+  document.getElementById('root').innerHTML = '<div style="font-family:monospace;max-width:800px;margin:60px auto;padding:24px;background:#fff3f3;border:1px solid #f3b4b4;border-radius:12px;color:#7a1f1f;white-space:pre-wrap;"><strong>React failed to render.</strong>\n\n' + (err && err.message ? err.message : String(err)) + '</div>';
+  console.error(err);
+}
+</script>
+</body>
+</html>
