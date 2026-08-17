@@ -720,3 +720,23 @@ function RoiCalculator(){
     </section>
   );
 }
+
+
+/* ---------------- Integrations ---------------- */
+function Integrations(){
+  return (
+    <section id="integrations" className="py-20 px-5">
+      <div className="max-w-5xl mx-auto text-center">
+        <h3 className="js-reveal font-display text-xl md:text-2xl font-semibold">Works with the tools your business already uses.</h3>
+        <div className="flex flex-wrap justify-center gap-3 mt-8">
+          {INTEGRATIONS.map((n,i)=>(
+            <div key={n} className="js-reveal card px-4 py-2.5 text-sm font-medium text-[var(--ink-soft)] hover:text-[var(--ink)] hover:shadow-md transition-all" style={{animationDelay:`${i*0.04}s`}}>
+              {n}
+            </div>
+          ))}
+        </div>
+        <div className="text-[11px] text-[var(--ink-soft)] mt-6 uppercase tracking-wide">Integration-ready — availability varies by plan and region</div>
+      </div>
+    </section>
+  );
+}
