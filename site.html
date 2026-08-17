@@ -950,3 +950,31 @@ function Security(){
     </section>
   );
 }
+
+
+/* ---------------- How It Works ---------------- */
+function HowItWorks(){
+  const steps = [
+    {n:'01', t:'Connect', d:'Connect the tools your business already uses.'},
+    {n:'02', t:'Configure', d:'Define workflows, permissions, and business rules.'},
+    {n:'03', t:'Deploy', d:'Assign specialized AI agents to your operations.'},
+    {n:'04', t:'Scale', d:'Monitor performance and expand your AI workforce.'},
+  ];
+  return (
+    <section id="how-it-works" className="py-24 px-5">
+      <div className="max-w-6xl mx-auto">
+        <h2 className="js-reveal font-display text-3xl md:text-4xl font-bold tracking-tight text-center mb-14">How It Works</h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {steps.map((s,i)=>(
+            <div key={s.n} className="js-reveal relative" style={{animationDelay:`${i*0.08}s`}}>
+              <div className="font-display text-4xl font-bold text-slate-200">{s.n}</div>
+              <div className="font-semibold mt-2">{s.t}</div>
+              <div className="text-sm text-[var(--ink-soft)] mt-1.5 leading-relaxed">{s.d}</div>
+              {i<steps.length-1 && <div className="hidden lg:block absolute top-4 -right-3 w-6 h-px bg-slate-200"/>}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
