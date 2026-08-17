@@ -910,3 +910,43 @@ function OperationsDashboard(){
     </section>
   );
 }
+ 
+
+/* ---------------- Security & Governance ---------------- */
+function Security(){
+  const cards = [
+    {icon:Icon.shield, title:'Human Approval', d:'Sensitive actions require authorization before they execute.'},
+    {icon:Icon.chart, title:'Audit Trails', d:'Every important AI action is recorded, end to end.'},
+    {icon:Icon.lock, title:'Role-Based Access', d:'Control exactly what agents and employees can access.'},
+    {icon:Icon.bolt, title:'Workflow Controls', d:'Define the rules that govern autonomous actions.'},
+  ];
+  const timeline = ['Agent started action','Action evaluated','Approval requested','Human approved','Action executed','Audit recorded'];
+  return (
+    <section className="py-24 px-5 bg-[var(--bg-soft)] border-y border-[var(--line)]">
+      <div className="max-w-6xl mx-auto">
+        <h2 className="js-reveal font-display text-3xl md:text-4xl font-bold tracking-tight text-center mb-14">AI You Can Trust</h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-16">
+          {cards.map((c,i)=>(
+            <div key={c.title} className="js-reveal card p-6" style={{animationDelay:`${i*0.07}s`}}>
+              <div className="w-11 h-11 rounded-xl bg-white border border-[var(--line)] text-[var(--blue)] flex items-center justify-center mb-5"><c.icon className="w-5 h-5"/></div>
+              <div className="font-semibold text-sm mb-2">{c.title}</div>
+              <div className="text-[13px] text-[var(--ink-soft)] leading-relaxed">{c.d}</div>
+            </div>
+          ))}
+        </div>
+        <div className="card p-8 overflow-x-auto">
+          <div className="flex items-center gap-3 min-w-[720px]">
+            {timeline.map((s,i)=>(
+              <React.Fragment key={s}>
+                <div className="flex-1 text-center">
+                  <div className="text-xs font-semibold px-3 py-3 rounded-lg bg-[var(--bg-soft)] border border-[var(--line)]">{s}</div>
+                </div>
+                {i<timeline.length-1 && <Icon.arrow className="w-4 h-4 text-slate-300 shrink-0"/>}
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
