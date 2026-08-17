@@ -191,3 +191,80 @@ const AGENTS = [
   { key:'support', name:'Support Agent', status:'Active', work:'7 conversations', color:'#F59E0B', icon:Icon.chat, angle:126 },
   { key:'ops', name:'Operations Agent', status:'Idle', work:'0 blocked tasks', color:'#64748B', icon:Icon.chart, angle:198 },
 ];
+
+
+const ACTIVITY_EVENTS = [
+  {t:'09:42', who:'Sales Agent', what:'Lead captured from WhatsApp', color:'#2E7BD6'},
+  {t:'09:43', who:'Support Agent', what:'Customer request classified', color:'#F59E0B'},
+  {t:'09:44', who:'Finance Agent', what:'M-Pesa payment matched to invoice', color:'#14B8A6'},
+  {t:'09:45', who:'Executive Agent', what:'Calendar updated for 3pm review', color:'#1E4FA0'},
+  {t:'09:47', who:'Sales Agent', what:'Follow-up scheduled in HubSpot', color:'#2E7BD6'},
+  {t:'09:49', who:'Finance Agent', what:'Payment queued for approval', color:'#14B8A6'},
+];
+
+const AGENT_TABS = {
+  sales: {
+    label:'Sales Agent',
+    steps:['Lead Capture — WhatsApp','Qualification — AI Analysis','CRM Sync — HubSpot','Follow-up — Scheduled'],
+    integrations:'WhatsApp → ShaqoAI → HubSpot',
+  },
+  support: {
+    label:'Support Agent',
+    steps:['Customer Message','Intent Detection','Knowledge Search','Response Sent','Escalation if Needed'],
+    integrations:'WhatsApp / Email → ShaqoAI → Helpdesk',
+  },
+  finance: {
+    label:'Finance Agent',
+    steps:['M-Pesa Transaction','Transaction Matching','Invoice Verification','Human Approval','Receipt Issued'],
+    integrations:'Daraja API → ShaqoAI → Accounting',
+  },
+  executive: {
+    label:'Executive Agent',
+    steps:['Email Received','Prioritization','Task Creation','Calendar Update','Team Follow-up'],
+    integrations:'Gmail / Outlook → ShaqoAI → Calendar',
+  }
+};
+
+const INTEGRATIONS = ['M-Pesa','WhatsApp','Gmail','Google Calendar','Microsoft Outlook','HubSpot','Shopify','PostgreSQL'];
+
+const DEPT_COLORS = {
+  'Sales & Business Development':'#1E4FA0',
+  'Marketing & Content':'#2E7BD6',
+  'Operations & Projects':'#14B8A6',
+  'People & Finance':'#F59E0B',
+  'Customer & Executive Support':'#0EA5E9',
+  'Education':'#7C3AED',
+  'Engineering & Design':'#DB2777',
+  'Legal & Compliance':'#475569',
+  'Healthcare Administration':'#059669',
+  'Commerce & Data':'#2563EB',
+  'Career & Lifestyle':'#D97706',
+};
+
+const AI_EMPLOYEES = [
+  { emoji:'💼', name:'Amara', role:'AI Business Development Manager', dept:'Sales & Business Development', skills:['Prospecting','Company Research','Decision-Maker ID','Outreach'], can:'Finds prospects, researches companies, identifies decision-makers, generates leads, and manages follow-ups.' },
+  { emoji:'📈', name:'Sarah', role:'AI Sales Representative', dept:'Sales & Business Development', skills:['Lead Qualification','Quotations','Follow-up','Closing'], can:'Qualifies leads, answers product questions, prepares quotations, and helps close sales.' },
+  { emoji:'📱', name:'Jordan', role:'AI Social Media Manager', dept:'Marketing & Content', skills:['Content Calendar','Copywriting','Campaigns','Analytics'], can:'Plans content, writes posts, builds content calendars, and analyzes social performance.' },
+  { emoji:'✍️', name:'Maya', role:'AI Content Writer', dept:'Marketing & Content', skills:['Blogging','Newsletters','Ad Copy','Proposals'], can:'Writes blogs, articles, website content, newsletters, and marketing copy.' },
+  { emoji:'🔎', name:'Elena', role:'AI Research Analyst', dept:'Marketing & Content', skills:['Market Research','Competitor Analysis','Reporting'], can:'Researches markets, competitors, and industries, and produces structured reports.' },
+  { emoji:'📋', name:'Farah', role:'AI Tender & Proposal Specialist', dept:'Sales & Business Development', skills:['RFP Analysis','Compliance Matrix','Proposal Drafting'], can:'Finds tenders, analyzes RFPs, builds compliance matrices, and drafts proposals on deadline.' },
+  { emoji:'👥', name:'Deka', role:'AI HR Manager', dept:'People & Finance', skills:['Job Descriptions','CV Screening','Interview Prep','Onboarding'], can:'Creates job descriptions, screens and ranks applicants, and supports onboarding.' },
+  { emoji:'💰', name:'Kevin', role:'AI Finance Assistant', dept:'People & Finance', skills:['Expense Tracking','Invoicing','Reporting'], can:'Tracks expenses, prepares invoices, organizes financial data, and generates basic reports.' },
+  { emoji:'🎧', name:'Zara', role:'AI Customer Support Agent', dept:'Customer & Executive Support', skills:['Troubleshooting','Ticketing','Escalation'], can:'Answers customers, troubleshoots common problems, and manages support tickets.' },
+  { emoji:'🗓️', name:'Grace', role:'AI Executive Assistant', dept:'Customer & Executive Support', skills:['Scheduling','Inbox Triage','Briefings'], can:'Manages schedules, meetings, reminders, emails, tasks, and daily briefings.' },
+  { emoji:'👨‍🏫', name:'Nadia', role:'AI Teacher / Tutor', dept:'Education', skills:['Curriculum Design','Lesson Delivery','Homework & Grading','Progress Tracking'], can:'Builds a personalized curriculum, teaches step-by-step, sets homework, and adapts difficulty automatically.' },
+  { emoji:'🗣️', name:'Layla', role:'AI Language Teacher', dept:'Education', skills:['Conversation Practice','Grammar','Pronunciation'], can:'Teaches languages through conversation, vocabulary, grammar, and pronunciation exercises.' },
+  { emoji:'💻', name:'Marcus', role:'AI Software Developer', dept:'Engineering & Design', skills:['Coding','Debugging','APIs'], can:'Builds and debugs software, writes code, and helps design and develop applications.' },
+  { emoji:'🎨', name:'Leo', role:'AI Graphic Designer', dept:'Engineering & Design', skills:['Brand Concepts','Social Visuals','Presentations'], can:'Creates brand concepts, marketing visuals, social-media designs, and presentations.' },
+  { emoji:'⚖️', name:'Victor', role:'AI Legal Assistant', dept:'Legal & Compliance', skills:['Contract Review','Clause Identification','Legal Research'], can:'Researches laws, summarizes contracts, and organizes legal documents.', disclaimer:'Not a substitute for a licensed lawyer.' },
+  { emoji:'🏥', name:'Naima', role:'AI Medical Administrative Assistant', dept:'Healthcare Administration', skills:['Appointments','Admin Documents','General Info'], can:'Organizes appointments, summarizes non-diagnostic information, and prepares administrative documents.', disclaimer:'Directs medical decisions to qualified professionals.' },
+  { emoji:'🛒', name:'Priya', role:'AI E-commerce Manager', dept:'Commerce & Data', skills:['Listings','Inventory','Promotions'], can:'Manages product listings, customer questions, inventory info, and sales analysis.' },
+  { emoji:'🧑‍💼', name:'Daniel', role:'AI Project Manager', dept:'Operations & Projects', skills:['Task Breakdown','Deadlines','Progress Reports'], can:'Breaks projects into tasks, monitors deadlines, and flags potential delays.' },
+  { emoji:'📊', name:'Chen', role:'AI Data Analyst', dept:'Commerce & Data', skills:['Spreadsheets','Trend Analysis','Insights'], can:'Analyzes spreadsheets and datasets, identifies trends, and explains insights in plain language.' },
+  { emoji:'📢', name:'Aisha', role:'AI Marketing Manager', dept:'Marketing & Content', skills:['Strategy','Personas','Budgets'], can:'Develops marketing strategies, customer personas, campaigns, and performance reports.' },
+  { emoji:'🧑‍💻', name:'Ryan', role:'AI IT Support Specialist', dept:'Engineering & Design', skills:['Troubleshooting','Documentation','Software & Hardware'], can:'Diagnoses common technical problems and guides users through fixes.' },
+  { emoji:'📄', name:'Fatima', role:'AI Resume & Career Coach', dept:'Career & Lifestyle', skills:['CV Writing','Cover Letters','Interview Prep'], can:'Improves CVs, writes cover letters, and prepares candidates for interviews.' },
+  { emoji:'🌍', name:'Noah', role:'AI Travel Planner', dept:'Career & Lifestyle', skills:['Itineraries','Comparisons','Scheduling'], can:'Researches destinations, builds itineraries, and compares travel options.' },
+  { emoji:'🏢', name:'Halima', role:'AI Operations Manager', dept:'Operations & Projects', skills:['SOPs','Workflows','Efficiency'], can:'Creates SOPs, organizes workflows, and identifies ways to improve efficiency.' },
+  { emoji:'🧠', name:'Sam', role:'AI Personal Productivity Coach', dept:'Career & Lifestyle', skills:['Goal Setting','Prioritization','Accountability'], can:'Helps set goals, prioritize tasks, build routines, and track progress.' },
+];
