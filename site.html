@@ -451,3 +451,86 @@ function ActivityFeed(){
     </div>
   );
 }
+
+
+/* ---------------- Hero ---------------- */
+function Hero(){
+  return (
+    <section id="top" className="relative grain-bg pt-36 pb-24 md:pt-44 md:pb-32 px-5">
+      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <div className="js-reveal inline-flex items-center gap-2 text-[11px] font-semibold tracking-wider uppercase text-[var(--blue)] bg-[var(--bg-mist)] border border-blue-100 px-3 py-1.5 rounded-full">
+            <span className="dot pulse-dot" style={{background:'#1E4FA0'}}/> AI-Powered Operations
+          </div>
+          <h1 className="js-reveal font-display text-[2.6rem] leading-[1.05] sm:text-5xl md:text-6xl font-bold tracking-tight mt-5" style={{animationDelay:'.05s'}}>
+            Deploy Your <span className="grad-text">Autonomous AI Workforce</span>
+          </h1>
+          <p className="js-reveal text-lg text-[var(--ink-soft)] mt-6 max-w-lg leading-relaxed" style={{animationDelay:'.1s'}}>
+            ShaqoAI gives businesses intelligent AI agents that automate workflows, coordinate operations, and help teams get more done — with humans always in control when it matters.
+          </p>
+          <div className="js-reveal flex flex-wrap items-center gap-4 mt-8" style={{animationDelay:'.15s'}}>
+            <a href="#pricing" className="btn-primary font-semibold px-6 py-3.5 rounded-xl inline-flex items-center gap-2">
+              Build Your AI Workforce <Icon.arrow className="w-4 h-4"/>
+            </a>
+            <a href="#how-it-works" className="btn-ghost font-semibold px-6 py-3.5 rounded-xl inline-flex items-center gap-2">
+              <Icon.play className="w-4 h-4"/> Watch How It Works
+            </a>
+          </div>
+          <div className="js-reveal flex items-center gap-6 mt-10 text-xs text-[var(--ink-soft)]" style={{animationDelay:'.2s'}}>
+            <span className="flex items-center gap-1.5"><Icon.check className="w-3.5 h-3.5 text-[var(--green)]"/> No credit card required</span>
+            <span className="flex items-center gap-1.5"><Icon.check className="w-3.5 h-3.5 text-[var(--green)]"/> Human approval built in</span>
+          </div>
+        </div>
+
+        <div className="relative">
+          <div className="text-center mb-2">
+            <span className="text-xs font-semibold uppercase tracking-wide text-[var(--ink-soft)]">Deployment Center</span>
+          </div>
+          <DeploymentCenter/>
+          <div className="hidden lg:block absolute -left-16 bottom-2"><WorkflowPanel/></div>
+          <div className="hidden lg:block absolute -right-10 top-8"><ActivityFeed/></div>
+        </div>
+      </div>
+      <div className="lg:hidden max-w-md mx-auto mt-10 flex flex-col gap-6 items-center px-4">
+        <WorkflowPanel/>
+        <ActivityFeed/>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Impact Metrics ---------------- */
+function ImpactMetrics(){
+  const [seen, setSeen] = useState(false);
+  const ref = useRef(null);
+  useEffect(()=>{
+    const io = new IntersectionObserver(([e])=>{ if(e.isIntersecting) setSeen(true); }, {threshold:.4});
+    if(ref.current) io.observe(ref.current);
+    return ()=>io.disconnect();
+  },[]);
+  const a = useCountUp(90, 1200, seen);
+  const b = useCountUp(40, 1200, seen);
+  const metrics = [
+    { val: Math.round(a)+'%+', label:'Potential repetitive-work automation'},
+    { val: Math.round(b)+'%+', label:'Potential operational overhead reduction'},
+    { val:'24/7', label:'AI workforce availability'},
+    { val:'M-Pesa', label:'Local payment workflow support'},
+  ];
+  return (
+    <section ref={ref} className="py-24 px-5 bg-[var(--bg-soft)] border-y border-[var(--line)]">
+      <div className="max-w-6xl mx-auto text-center">
+        <h2 className="js-reveal font-display text-3xl md:text-4xl font-bold tracking-tight">Built for Kenya. Ready for the world.</h2>
+        <p className="js-reveal text-[var(--ink-soft)] max-w-xl mx-auto mt-4" style={{animationDelay:'.05s'}}>ShaqoAI combines modern AI automation with the tools and workflows businesses already use across East Africa.</p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-14">
+          {metrics.map((m,i)=>(
+            <div key={i} className="js-reveal card py-8 px-4" style={{animationDelay:`${0.1+i*0.07}s`}}>
+              <div className="font-display num-tick text-3xl md:text-4xl font-bold grad-text">{m.val}</div>
+              <div className="text-xs text-[var(--ink-soft)] mt-2 leading-snug">{m.label}</div>
+            </div>
+          ))}
+        </div>
+        <div className="text-[11px] text-[var(--ink-soft)] mt-6 uppercase tracking-wide">Illustrative automation potential — not independently verified customer results</div>
+      </div>
+    </section>
+  );
+}
