@@ -1,10 +1,11 @@
-import { mountBabelApp } from './utils/babel-runtime.js';
+import { App } from './components/landing.jsx';
+import { React, ReactDOM } from './utils/runtime.js';
 
-const source = document.getElementById('shaqoai-app-source');
 const root = document.getElementById('root');
 
 try {
-  mountBabelApp(source, root);
+  root.dataset.mounted = '1';
+  ReactDOM.createRoot(root).render(React.createElement(App));
 } catch (err) {
   root.innerHTML = '<div style="font-family:monospace;max-width:800px;margin:60px auto;padding:24px;background:#fff3f3;border:1px solid #f3b4b4;border-radius:12px;color:#7a1f1f;white-space:pre-wrap;"><strong>React failed to render.</strong>\n\n' + (err && err.message ? err.message : String(err)) + '</div>';
   console.error(err);
