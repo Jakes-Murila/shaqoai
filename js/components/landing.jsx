@@ -160,10 +160,13 @@ function Nav(){
           <img src={LOGO_SRC} alt="ShaqoAI" className="w-8 h-8 rounded-lg object-cover shadow-sm"/>
           ShaqoAI
         </a>
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-[var(--ink-soft)]">
+        <nav className="hidden lg:flex items-center gap-7 text-sm font-medium text-[var(--ink-soft)]">
           {links.map(l=>(<a key={l} href={'#'+l.toLowerCase().replace(/\s/g,'-')} className="hover:text-[var(--ink)] transition-colors">{l}</a>))}
         </nav>
-        <div className="hidden md:flex items-center gap-3">
+        <div className="header-actions hidden lg:flex items-center shrink-0 gap-3">
+          <span className="header-status hidden xl:inline-flex items-center gap-2 whitespace-nowrap">
+            <span className="dot pulse-dot"/> Executive Agent Active
+          </span>
           <a href="#" className="text-sm font-medium px-4 py-2 text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors">Sign In</a>
           <a href="#pricing" className="btn-primary text-sm font-semibold px-4 py-2.5 rounded-xl">Start Free Trial</a>
         </div>
@@ -194,10 +197,16 @@ function Nav(){
 /* ---------------- Deployment Center (agent network) ---------------- */
 function DeploymentCenter(){
   const [activeAgent, setActiveAgent] = useState(null);
-  const R = 148;
+  const positions = {
+    exec: { className:'network-node--exec', x:320, y:132 },
+    sales: { className:'network-node--sales', x:430, y:138 },
+    finance: { className:'network-node--finance', x:430, y:365 },
+    support: { className:'network-node--support', x:210, y:260 },
+    ops: { className:'network-node--ops', x:210, y:368 },
+  };
   return (
-    <div className="relative w-full aspect-square max-w-[520px] mx-auto select-none">
-      <svg viewBox="0 0 400 400" className="absolute inset-0 w-full h-full">
+    <div className="network-canvas max-w-[640px] mx-auto select-none">
+      <svg viewBox="0 0 640 520" className="network-vectors" aria-hidden="true">
         <defs>
           <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0%" stopColor="#1E4FA0" stopOpacity="0.55"/>
@@ -205,22 +214,21 @@ function DeploymentCenter(){
           </linearGradient>
         </defs>
         {AGENTS.map((a,i)=>{
-          const rad = (a.angle * Math.PI)/180;
-          const x = 200 + R*Math.cos(rad), y = 200 + R*Math.sin(rad);
+          const { x, y } = positions[a.key];
           return (
             <g key={a.key}>
-              <path d={`M200,200 Q${(200+x)/2 + 20*Math.sin(rad)},${(200+y)/2 - 20*Math.cos(rad)} ${x},${y}`}
+              <path d={`M320,260 Q${(320+x)/2},${(260+y)/2} ${x},${y}`}
                 fill="none" stroke="url(#lineGrad)" strokeWidth="1.6" className="flow-line"/>
               <circle r="3" fill={a.color}>
                 <animateMotion dur={`${3+i*0.4}s`} repeatCount="indefinite"
-                  path={`M200,200 Q${(200+x)/2 + 20*Math.sin(rad)},${(200+y)/2 - 20*Math.cos(rad)} ${x},${y}`} />
+                  path={`M320,260 Q${(320+x)/2},${(260+y)/2} ${x},${y}`} />
               </circle>
             </g>
           );
         })}
       </svg>
       {/* center node */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 float">
+      <div className="network-core float">
         <div className="w-24 h-24 rounded-2xl bg-white shadow-[0_20px_45px_-12px_rgba(37,99,235,0.55)] flex flex-col items-center justify-center overflow-hidden border border-[var(--line)]">
           <img src={LOGO_SRC} alt="ShaqoAI" className="w-14 h-14 object-cover rounded-lg"/>
           <span className="text-[9px] font-semibold text-[var(--ink-soft)] mt-0.5">Core</span>
@@ -228,16 +236,14 @@ function DeploymentCenter(){
       </div>
       {/* agent nodes */}
       {AGENTS.map((a,i)=>{
-        const rad = (a.angle * Math.PI)/180;
-        const x = 50 + (R/200*100)*Math.cos(rad), y = 50 + (R/200*100)*Math.sin(rad);
         const AIcon = a.icon;
         return (
           <button key={a.key}
             onMouseEnter={()=>setActiveAgent(a.key)} onMouseLeave={()=>setActiveAgent(null)}
             onClick={()=>setActiveAgent(activeAgent===a.key?null:a.key)}
-            style={{ left:`${x}%`, top:`${y}%`, animationDelay:`${i*0.4}s` }}
-            className="float-slow absolute -translate-x-1/2 -translate-y-1/2 z-20">
-            <div className={`card px-3 py-2.5 flex items-center gap-2 min-w-[132px] transition-all duration-200 ${activeAgent===a.key ? 'glow-active' : 'hover:shadow-md'}`}>
+            style={{animationDelay:`${i*0.4}s`}}
+            className={`network-node ${positions[a.key].className} float-slow`}>
+            <div className={`card network-agent-card px-3 py-2.5 flex items-center gap-2 min-w-[132px] transition-all duration-200 ${activeAgent===a.key ? 'glow-active' : 'hover:shadow-md'}`}>
               <span className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style={{background:a.color+'1a', color:a.color}}>
                 <AIcon className="w-4 h-4"/>
               </span>
@@ -271,8 +277,8 @@ function WorkflowPanel(){
     return ()=>clearInterval(iv);
   },[]);
   return (
-    <div className="card p-4 w-64 shadow-lg">
-      <div className="text-xs font-semibold text-[var(--ink-soft)] uppercase tracking-wide mb-3">Sales Agent Workflow</div>
+    <div className="hero-sidecard card p-5 w-64 shadow-lg">
+      <div className="hero-sidecard__title">Sales Agent Workflow</div>
       <div className="flex flex-col">
         {steps.map((s,i)=>(
           <div key={i} className="flex gap-3">
@@ -307,8 +313,8 @@ function ActivityFeed(){
     return ()=>clearInterval(iv);
   },[]);
   return (
-    <div className="card p-4 w-72 shadow-lg">
-      <div className="text-xs font-semibold text-[var(--ink-soft)] uppercase tracking-wide mb-3">Autonomous Activity</div>
+    <div className="hero-sidecard card p-5 w-72 shadow-lg">
+      <div className="hero-sidecard__title">Autonomous Activity</div>
       <div className="flex flex-col gap-3 h-[168px] overflow-hidden scrollbar-thin">
         {items.map((e,i)=>(
           <div key={e.who+i+e.t} className="flex items-start gap-2.5" style={{animation:'fadeUp .5s ease both'}}>
