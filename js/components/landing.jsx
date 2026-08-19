@@ -197,67 +197,69 @@ function Nav(){
 /* ---------------- Deployment Center (agent network) ---------------- */
 function DeploymentCenter(){
   const [activeAgent, setActiveAgent] = useState(null);
-  const positions = {
-    exec: { className:'network-node--exec', x:320, y:132 },
-    sales: { className:'network-node--sales', x:430, y:138 },
-    finance: { className:'network-node--finance', x:430, y:365 },
-    support: { className:'network-node--support', x:210, y:260 },
-    ops: { className:'network-node--ops', x:210, y:368 },
-  };
+  const agents = [
+    {key:'exec', label:'Executive Agent', detail:'Orchestrating decisions', icon:Icon.users, position:'hero-agent--executive', color:'#4ade80'},
+    {key:'manager', label:'AI Manager Agent', detail:'Overseeing 5 workflows', icon:Icon.chart, position:'hero-agent--manager', color:'#a78bfa'},
+    {key:'data', label:'Data Scientist Agent', detail:'Processing new datasets', icon:Icon.chart, position:'hero-agent--data', color:'#22d3ee'},
+    {key:'support', label:'Support Agent', detail:'17 tickets · 7 conversations', icon:Icon.chat, position:'hero-agent--support', color:'#38bdf8'},
+    {key:'ops', label:'Operations Agent', detail:'0 blocked tasks', icon:Icon.bolt, position:'hero-agent--operations', color:'#2dd4bf'},
+    {key:'finance', label:'Finance Agent', detail:'Processing · 12 transactions', icon:Icon.wallet, position:'hero-agent--finance', color:'#fbbf24'},
+  ];
+  const activity = [
+    ['05:44','Finance Agent','M-Pesa payment matched to invoice','#2dd4bf'],
+    ['09:45','Executive Agent','Calendar updated for 3pm review','#a78bfa'],
+    ['09:47','Sales Agent','Follow-up scheduled in HubSpot','#38bdf8'],
+    ['08:49','Finance Agent','Payment queued for approval','#fbbf24'],
+  ];
   return (
-    <div className="network-canvas max-w-[640px] mx-auto select-none">
-      <svg viewBox="0 0 640 520" className="network-vectors" aria-hidden="true">
+    <div className="hero-network select-none">
+      <div className="hero-network__mesh" aria-hidden="true"/>
+      <svg viewBox="0 0 760 600" className="hero-network__vectors" aria-hidden="true">
         <defs>
-          <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#1E4FA0" stopOpacity="0.55"/>
-            <stop offset="100%" stopColor="#2E7BD6" stopOpacity="0.15"/>
+          <linearGradient id="heroLineGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.14"/>
+            <stop offset="55%" stopColor="#67e8f9" stopOpacity="0.85"/>
+            <stop offset="100%" stopColor="#a78bfa" stopOpacity="0.3"/>
           </linearGradient>
+          <radialGradient id="heroGlow"><stop stopColor="#22d3ee" stopOpacity=".3"/><stop offset="1" stopColor="#22d3ee" stopOpacity="0"/></radialGradient>
         </defs>
-        {AGENTS.map((a,i)=>{
-          const { x, y } = positions[a.key];
-          return (
-            <g key={a.key}>
-              <path d={`M320,260 Q${(320+x)/2},${(260+y)/2} ${x},${y}`}
-                fill="none" stroke="url(#lineGrad)" strokeWidth="1.6" className="flow-line"/>
-              <circle r="3" fill={a.color}>
-                <animateMotion dur={`${3+i*0.4}s`} repeatCount="indefinite"
-                  path={`M320,260 Q${(320+x)/2},${(260+y)/2} ${x},${y}`} />
-              </circle>
-            </g>
-          );
-        })}
+        <circle cx="398" cy="304" r="220" fill="url(#heroGlow)"/>
+        {['M398 304 C390 190 404 136 420 92','M398 304 C490 202 590 138 670 108','M398 304 C520 280 638 300 690 350','M398 304 C480 386 580 438 670 476','M398 304 C325 420 242 480 142 500','M398 304 C266 302 150 272 90 230','M398 304 C278 210 200 190 130 168'].map((path,i)=>(
+          <path key={path} d={path} fill="none" stroke="url(#heroLineGrad)" strokeWidth="1.35" className="flow-line" style={{animationDelay:`${i*.5}s`}}/>
+        ))}
+        {[['398','304'],['420','92'],['670','108'],['690','350'],['670','476'],['142','500'],['90','230'],['130','168']].map(([cx,cy],i)=><circle key={i} cx={cx} cy={cy} r={i ? '3' : '5'} fill={i ? '#67e8f9' : '#fff'} />)}
       </svg>
-      {/* center node */}
-      <div className="network-core float">
-        <div className="w-24 h-24 rounded-2xl bg-white shadow-[0_20px_45px_-12px_rgba(37,99,235,0.55)] flex flex-col items-center justify-center overflow-hidden border border-[var(--line)]">
+      <div className="hero-core float">
+        <div className="hero-core__tile">
           <img src={LOGO_SRC} alt="ShaqoAI" className="w-14 h-14 object-cover rounded-lg"/>
-          <span className="text-[9px] font-semibold text-[var(--ink-soft)] mt-0.5">Core</span>
+          <span>Core</span>
         </div>
       </div>
-      {/* agent nodes */}
-      {AGENTS.map((a,i)=>{
-        const AIcon = a.icon;
+      {agents.map((agent,i)=>{
+        const AgentIcon = agent.icon;
         return (
-          <button key={a.key}
-            onMouseEnter={()=>setActiveAgent(a.key)} onMouseLeave={()=>setActiveAgent(null)}
-            onClick={()=>setActiveAgent(activeAgent===a.key?null:a.key)}
+          <button key={agent.key} onMouseEnter={()=>setActiveAgent(agent.key)} onMouseLeave={()=>setActiveAgent(null)} onClick={()=>setActiveAgent(activeAgent===agent.key?null:agent.key)}
             style={{animationDelay:`${i*0.4}s`}}
-            className={`network-node ${positions[a.key].className} float-slow`}>
-            <div className={`card network-agent-card px-3 py-2.5 flex items-center gap-2 min-w-[132px] transition-all duration-200 ${activeAgent===a.key ? 'glow-active' : 'hover:shadow-md'}`}>
-              <span className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style={{background:a.color+'1a', color:a.color}}>
-                <AIcon className="w-4 h-4"/>
-              </span>
-              <div className="text-left leading-tight">
-                <div className="text-[11px] font-semibold text-[var(--ink)]">{a.name}</div>
-                <div className="flex items-center gap-1 text-[10px] text-[var(--ink-soft)]">
-                  <span className="dot pulse-dot" style={{background: a.status==='Idle' ? '#94a3b8' : '#22C55E'}}/>
-                  {a.status} · {a.work}
-                </div>
-              </div>
-            </div>
+            className={`hero-agent ${agent.position} float-slow ${activeAgent===agent.key ? 'hero-agent--active' : ''}`}>
+            <span className="hero-agent__icon" style={{background:agent.color+'1f', color:agent.color}}><AgentIcon/></span>
+            <span className="hero-agent__copy"><b>{agent.label}</b><small>{agent.detail}</small></span>
+            {agent.key==='finance' && <span className="hero-agent__live"/>}
           </button>
         );
       })}
+      <div className="hero-workflow">
+        <div className="hero-panel__title">Sales Agent Workflow</div>
+        {[['Lead Capture','WhatsApp · 09:42'],['Qualification','AI Analysis · 09:43'],['CRM Sync','HubSpot · 09:44']].map(([title,detail],i)=>(
+          <div className="hero-step" key={title}><span className={i===1?'hero-step__dot hero-step__dot--active':'hero-step__dot'}/><div><b>{title}</b><small>{detail}</small></div></div>
+        ))}
+      </div>
+      <div className="hero-activity">
+        <div className="hero-panel__title">Autonomous Activity</div>
+        {activity.map(([time,agent,event,color])=><div className="hero-activity__item" key={time+agent}><i style={{background:color}}/><div><small>{time} · {agent}</small><b>{event}</b></div></div>)}
+      </div>
+      <div className="hero-chart hero-chart--top"><small>Transaction Volume</small><svg viewBox="0 0 160 54" aria-hidden="true"><path d="M0 47 C15 44 18 25 31 35 S48 45 60 18 S76 39 91 26 S109 35 123 12 S143 28 160 4"/><path className="hero-chart__fill" d="M0 47 C15 44 18 25 31 35 S48 45 60 18 S76 39 91 26 S109 35 123 12 S143 28 160 4 V54 H0Z"/></svg></div>
+      <div className="hero-chart hero-chart--bottom"><small>Transaction Volume</small><svg viewBox="0 0 160 54" aria-hidden="true"><path d="M0 44 C13 39 21 18 35 35 S54 44 65 27 S78 41 92 23 S111 30 123 18 S145 27 160 6"/><path className="hero-chart__fill" d="M0 44 C13 39 21 18 35 35 S54 44 65 27 S78 41 92 23 S111 30 123 18 S145 27 160 6 V54 H0Z"/></svg></div>
+      <div className="hero-hub"><span className="hero-hub__label">Agent Hub</span><span className="hero-hub__core"/><span className="hero-hub__node hero-hub__node--a">Security Agent</span><span className="hero-hub__node hero-hub__node--b">QA Agent</span><span className="hero-hub__node hero-hub__node--c">Market Analyst</span></div>
     </div>
   );
 }
@@ -335,8 +337,8 @@ function ActivityFeed(){
 function Hero(){
   return (
     <section id="top" className="relative grain-bg pt-36 pb-24 md:pt-44 md:pb-32 px-5">
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-        <div>
+      <div className="hero-layout max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 xl:gap-14 items-center">
+        <div className="hero-copy">
           <div className="js-reveal inline-flex items-center gap-2 text-[11px] font-semibold tracking-wider uppercase text-[var(--blue)] bg-[var(--bg-mist)] border border-blue-100 px-3 py-1.5 rounded-full">
             <span className="dot pulse-dot" style={{background:'#1E4FA0'}}/> AI-Powered Operations
           </div>
@@ -360,18 +362,10 @@ function Hero(){
           </div>
         </div>
 
-        <div className="relative">
-          <div className="text-center mb-2">
-            <span className="text-xs font-semibold uppercase tracking-wide text-[var(--ink-soft)]">Deployment Center</span>
-          </div>
+        <div className="hero-visual">
+          <div className="hero-visual__label">Deployment Center</div>
           <DeploymentCenter/>
-          <div className="hidden lg:block absolute -left-16 bottom-2"><WorkflowPanel/></div>
-          <div className="hidden lg:block absolute -right-10 top-8"><ActivityFeed/></div>
         </div>
-      </div>
-      <div className="lg:hidden max-w-md mx-auto mt-10 flex flex-col gap-6 items-center px-4">
-        <WorkflowPanel/>
-        <ActivityFeed/>
       </div>
     </section>
   );
