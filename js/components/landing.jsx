@@ -167,8 +167,8 @@ function Nav(){
           <span className="header-status hidden xl:inline-flex items-center gap-2 whitespace-nowrap">
             <span className="dot pulse-dot"/> Executive Agent Active
           </span>
-          <a href="#" className="text-sm font-medium px-4 py-2 text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors">Sign In</a>
-          <a href="#pricing" className="btn-primary text-sm font-semibold px-4 py-2.5 rounded-xl">Start Free Trial</a>
+          <a href="/login?mode=login" className="text-sm font-medium px-4 py-2 text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors">Sign In</a>
+          <a href="/login?mode=signup" className="btn-primary text-sm font-semibold px-4 py-2.5 rounded-xl">Start Free Trial</a>
         </div>
         <button className="md:hidden p-2 -mr-2" onClick={()=>setOpen(true)} aria-label="Open menu"><Icon.menu className="w-6 h-6"/></button>
       </div>
@@ -184,8 +184,8 @@ function Nav(){
           {links.map(l=>(<a key={l} href={'#'+l.toLowerCase().replace(/\s/g,'-')} onClick={()=>setOpen(false)}>{l}</a>))}
         </div>
         <div className="mt-auto flex flex-col gap-3">
-          <a href="#" className="btn-ghost text-center py-2.5 rounded-xl font-medium">Sign In</a>
-          <a href="#pricing" onClick={()=>setOpen(false)} className="btn-primary text-center py-2.5 rounded-xl font-semibold">Start Free Trial</a>
+          <a href="/login?mode=login" className="btn-ghost text-center py-2.5 rounded-xl font-medium">Sign In</a>
+          <a href="/login?mode=signup" onClick={()=>setOpen(false)} className="btn-primary text-center py-2.5 rounded-xl font-semibold">Start Free Trial</a>
         </div>
       </div>
     </div>
@@ -349,7 +349,7 @@ function Hero(){
             ShaqoAI gives businesses intelligent AI agents that automate workflows, coordinate operations, and help teams get more done — with humans always in control when it matters.
           </p>
           <div className="js-reveal flex flex-wrap items-center gap-4 mt-8" style={{animationDelay:'.15s'}}>
-            <a href="#pricing" className="btn-primary font-semibold px-6 py-3.5 rounded-xl inline-flex items-center gap-2">
+            <a href="/login?mode=signup" className="btn-primary font-semibold px-6 py-3.5 rounded-xl inline-flex items-center gap-2">
               Build Your AI Workforce <Icon.arrow className="w-4 h-4"/>
             </a>
             <a href="#how-it-works" className="btn-ghost font-semibold px-6 py-3.5 rounded-xl inline-flex items-center gap-2">
@@ -880,7 +880,7 @@ function Pricing(){
               <ul className="flex flex-col gap-2.5 mb-8 flex-1">
                 {p.features.map(f=>(<li key={f} className="text-sm flex items-center gap-2"><Icon.check className="w-3.5 h-3.5 text-[var(--green)] shrink-0"/>{f}</li>))}
               </ul>
-              <a href="#" className={`text-center font-semibold py-3 rounded-xl text-sm ${p.popular ? 'btn-primary' : 'btn-ghost'}`}>{p.name==='Enterprise' ? 'Contact Sales' : 'Start Free Trial'}</a>
+              <a href="/login?mode=signup" className={`text-center font-semibold py-3 rounded-xl text-sm ${p.popular ? 'btn-primary' : 'btn-ghost'}`}>{p.name==='Enterprise' ? 'Contact Sales' : 'Start Free Trial'}</a>
             </div>
           ))}
         </div>
@@ -904,7 +904,7 @@ function FinalCTA(){
         <h2 className="js-reveal font-display text-3xl md:text-5xl font-bold tracking-tight leading-tight">Your Business Deserves a Workforce That Never Stops.</h2>
         <p className="js-reveal text-slate-300 mt-6 max-w-xl mx-auto" style={{animationDelay:'.05s'}}>Automate repetitive work, coordinate intelligent agents, and keep your team focused on the work that matters.</p>
         <div className="js-reveal flex flex-wrap justify-center gap-4 mt-9" style={{animationDelay:'.1s'}}>
-          <a href="#pricing" className="btn-primary font-semibold px-6 py-3.5 rounded-xl">Build Your AI Workforce →</a>
+          <a href="/login?mode=signup" className="btn-primary font-semibold px-6 py-3.5 rounded-xl">Build Your AI Workforce →</a>
           <a href="#" className="font-semibold px-6 py-3.5 rounded-xl border border-white/25 text-white hover:bg-white/10 transition-colors">Talk to ShaqoAI →</a>
         </div>
       </div>
