@@ -1,0 +1,11 @@
+name: Deploy backend
+on:
+  push:
+    branches: [main]
+    paths: ['apps/backend/**']
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Connect this job to the selected backend container platform."

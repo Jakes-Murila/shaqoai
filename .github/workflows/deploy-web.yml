@@ -1,0 +1,11 @@
+name: Deploy web
+on:
+  push:
+    branches: [main]
+    paths: ['apps/web/**', 'packages/**', 'pnpm-workspace.yaml', 'pnpm-lock.yaml', 'vercel.json']
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Deploy through Vercel Git integration or add VERCEL_TOKEN, VERCEL_ORG_ID, and VERCEL_PROJECT_ID."
